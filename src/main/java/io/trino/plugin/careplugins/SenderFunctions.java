@@ -16,7 +16,6 @@ package io.trino.plugin.careplugins;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
 import io.trino.plugin.caresender.IdentifySender;
-import io.trino.plugin.caresender.Sender;
 import io.trino.plugin.caresender.TrackSender;
 import io.trino.spi.block.Block;
 import io.trino.spi.function.Description;
@@ -45,7 +44,7 @@ public class SenderFunctions
                                        @SqlNullable @SqlType(StandardTypes.VARCHAR) Slice eventName,
                                        @SqlNullable @SqlType("V") Block propertiesRowData)
     {
-        Sender trackSender = new TrackSender();
+        TrackSender trackSender = new TrackSender();
         trackSender.send(userId.toStringUtf8(),
                 eventName.toStringUtf8(),
                 rowToImmutableMap(rowType, propertiesRowData));
@@ -59,12 +58,10 @@ public class SenderFunctions
     @SqlNullable
     public static Slice care_sendIdentify(@TypeParameter("V") RowType rowType,
                                           @SqlNullable @SqlType(StandardTypes.VARCHAR) Slice userId,
-                                          @SqlNullable @SqlType(StandardTypes.VARCHAR) Slice eventName,
                                           @SqlNullable @SqlType("V") Block traitsRowData)
     {
-        Sender identifySender = new IdentifySender();
+        IdentifySender identifySender = new IdentifySender();
         identifySender.send(userId.toStringUtf8(),
-                eventName.toStringUtf8(),
                 rowToImmutableMap(rowType, traitsRowData));
         return Slices.utf8Slice("Sent the data");
     }

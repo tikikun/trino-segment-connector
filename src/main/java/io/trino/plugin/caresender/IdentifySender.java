@@ -19,9 +19,8 @@ import com.segment.analytics.messages.IdentifyMessage;
 import static io.trino.plugin.caresender.TrinoSegmentClient.analytics;
 
 public class IdentifySender
-        implements Sender
 {
-    public void send(String userid, String eventName, ImmutableMap<String, Object> traits)
+    public void send(String userid, ImmutableMap<String, Object> traits)
     {
         analytics.enqueue(IdentifyMessage.builder()
                 .userId(userid)

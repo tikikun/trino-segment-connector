@@ -19,7 +19,6 @@ import com.segment.analytics.messages.TrackMessage;
 import static io.trino.plugin.caresender.TrinoSegmentClient.analytics;
 
 public class TrackSender
-        implements Sender
 {
     public TrackSender()
     {
