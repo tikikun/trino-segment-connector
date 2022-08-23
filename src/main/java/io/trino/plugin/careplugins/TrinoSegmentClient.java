@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.trino.plugin.caresender;
+package io.trino.plugin.careplugins;
 
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Log;

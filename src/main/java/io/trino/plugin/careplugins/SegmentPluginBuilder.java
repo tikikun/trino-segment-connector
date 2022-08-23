@@ -18,7 +18,7 @@ import io.trino.spi.Plugin;
 
 import java.util.Set;
 
-public class CareSegmentPluginBuilder
+public class SegmentPluginBuilder
         implements Plugin
 {
     @Override

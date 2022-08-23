@@ -26,7 +26,7 @@ import io.trino.spi.function.TypeParameter;
 import io.trino.spi.type.RowType;
 import io.trino.spi.type.StandardTypes;
 
-import static io.trino.plugin.caresender.TrinoSegmentClient.analytics;
+import static io.trino.plugin.careplugins.TrinoSegmentClient.analytics;
 import static io.trino.plugin.utils.RowUtils.rowToImmutableMap;
 
 public class SenderFunctions
@@ -35,12 +35,12 @@ public class SenderFunctions
     {
     }
 
-    @ScalarFunction("care_sendTrack")
+    @ScalarFunction("segment_sendTrack")
     @TypeParameter("V")
     @Description("This will send track event to Segment")
     @SqlType(StandardTypes.VARCHAR)
     @SqlNullable
-    public static Slice care_sendTrack(@TypeParameter("V") RowType rowType,
+    public static Slice segment_sendTrack(@TypeParameter("V") RowType rowType,
                                        @SqlNullable @SqlType(StandardTypes.VARCHAR) Slice userId,
                                        @SqlNullable @SqlType(StandardTypes.VARCHAR) Slice eventName,
                                        @SqlNullable @SqlType("V") Block propertiesRowData)
@@ -51,12 +51,12 @@ public class SenderFunctions
         return Slices.utf8Slice("Sent the data");
     }
 
-    @ScalarFunction("care_sendIdentify")
+    @ScalarFunction("segment_sendIdentify")
     @TypeParameter("V")
     @Description("This will send identify event to Segment")
     @SqlType(StandardTypes.VARCHAR)
     @SqlNullable
-    public static Slice care_sendIdentify(@TypeParameter("V") RowType rowType,
+    public static Slice segment_sendIdentify(@TypeParameter("V") RowType rowType,
                                           @SqlNullable @SqlType(StandardTypes.VARCHAR) Slice userId,
                                           @SqlNullable @SqlType("V") Block traitsRowData)
     {
