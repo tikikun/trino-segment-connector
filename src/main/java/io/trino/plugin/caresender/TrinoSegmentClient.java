@@ -37,5 +37,5 @@ public class TrinoSegmentClient
             System.out.println(error);
         }
     };
-    static final Analytics analytics = Analytics.builder("zL031BZQLTMIuqFbwPxBXzZQ2AkP6wAt").log(stdout).build();
+    public static final Analytics analytics = Analytics.builder(System.getenv("SEGMENT_WRITEKEY")).log(stdout).build();
 }

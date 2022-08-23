@@ -13,10 +13,10 @@
  */
 package io.trino.plugin.careplugins;
 
+import com.segment.analytics.messages.IdentifyMessage;
+import com.segment.analytics.messages.TrackMessage;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
-import io.trino.plugin.caresender.IdentifySender;
-import io.trino.plugin.caresender.TrackSender;
 import io.trino.spi.block.Block;
 import io.trino.spi.function.Description;
 import io.trino.spi.function.ScalarFunction;
@@ -26,6 +26,7 @@ import io.trino.spi.function.TypeParameter;
 import io.trino.spi.type.RowType;
 import io.trino.spi.type.StandardTypes;
 
+import static io.trino.plugin.caresender.TrinoSegmentClient.analytics;
 import static io.trino.plugin.utils.RowUtils.rowToImmutableMap;
 
 public class SenderFunctions
@@ -44,10 +45,9 @@ public class SenderFunctions
                                        @SqlNullable @SqlType(StandardTypes.VARCHAR) Slice eventName,
                                        @SqlNullable @SqlType("V") Block propertiesRowData)
     {
-        TrackSender trackSender = new TrackSender();
-        trackSender.send(userId.toStringUtf8(),
-                eventName.toStringUtf8(),
-                rowToImmutableMap(rowType, propertiesRowData));
+        analytics.enqueue(TrackMessage.builder(eventName.toStringUtf8())
+                .userId(userId.toStringUtf8())
+                .properties(rowToImmutableMap(rowType, propertiesRowData)));
         return Slices.utf8Slice("Sent the data");
     }
 
@@ -60,9 +60,9 @@ public class SenderFunctions
                                           @SqlNullable @SqlType(StandardTypes.VARCHAR) Slice userId,
                                           @SqlNullable @SqlType("V") Block traitsRowData)
     {
-        IdentifySender identifySender = new IdentifySender();
-        identifySender.send(userId.toStringUtf8(),
-                rowToImmutableMap(rowType, traitsRowData));
+        analytics.enqueue(IdentifyMessage.builder()
+                .userId(userId.toStringUtf8())
+                .traits(rowToImmutableMap(rowType, traitsRowData)));
         return Slices.utf8Slice("Sent the data");
     }
 }
