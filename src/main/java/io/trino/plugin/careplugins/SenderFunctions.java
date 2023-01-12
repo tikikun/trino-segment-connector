@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.trino.plugin.careplugins;
+package io.trino.plugin.segmentplugins;
 
 import com.segment.analytics.messages.IdentifyMessage;
 import com.segment.analytics.messages.TrackMessage;
@@ -26,7 +26,7 @@ import io.trino.spi.function.TypeParameter;
 import io.trino.spi.type.RowType;
 import io.trino.spi.type.StandardTypes;
 
-import static io.trino.plugin.careplugins.TrinoSegmentClient.analytics;
+import static io.trino.plugin.segmentplugins.TrinoSegmentClient.analytics;
 import static io.trino.plugin.utils.RowUtils.rowToImmutableMap;
 
 public class SenderFunctions

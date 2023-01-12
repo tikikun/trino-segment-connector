@@ -1,1 +1,1 @@
-io.trino.plugin.careplugins.SegmentPluginBuilder
+io.trino.plugin.segmentplugins.SegmentPluginBuilder
